@@ -1,0 +1,302 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="refresh" content="100">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link href="favicon.ico" rel="icon" type="image/x-icon" />
+	<title> Big T - Customiser </title>
+	<script src="jquery.min.js"> </script>
+	<script type="text/javascript" src="jscolor/jscolor.js"></script> <!-- original source http://jscolor.com/ for colour picker utilised for all input elements  where class=colorpicker -->
+	<script type="text/javascript" src="db.js"> </script> <!--fetch local "db" records-->
+<!-- *************************************** end scripts ***************************************** -->
+	<script>
+
+	function confirmPost()
+	{
+			var response=confirm("Are you sure you want to reset your current design ?\n All progress will be lost");
+			if (response)
+				return true ;
+			else
+				return false ;
+	}
+
+	function reset(requestloc)
+	{
+	if(requestloc=="resetbtn"){
+			if(confirmPost()){
+				localStorage.setItem("tshirtcolour", "f9f9f9");
+				localStorage.setItem("text", "_ _ _ _ _ _");
+				localStorage.setItem("fontcolour", "grey");
+				localStorage.setItem("tshirt_qty", "1");
+				localStorage.setItem("fontsize", "18px Arial");  
+				localStorage.setItem("tshirtsize", "small");  
+				localStorage.setItem("textposX", "100");  
+				localStorage.setItem("textposY", "120"); 
+			    window.location.reload(false);
+				}
+	}
+	if(requestloc=="addtocartfunc"){
+				localStorage.setItem("tshirtcolour", "f9f9f9");
+				localStorage.setItem("text", "_ _ _ _ _ _");
+				localStorage.setItem("fontcolour", "grey");
+				localStorage.setItem("tshirt_qty", "1");
+				localStorage.setItem("fontsize", "18px Arial");  
+				localStorage.setItem("tshirtsize", "small");  
+				localStorage.setItem("textposX", "100");  
+				localStorage.setItem("textposY", "120"); 
+				window.location.reload(false);
+	}
+	}
+	function addtocartfunc()
+	{
+		if (document.getElementById('spinnerqty').value > 0 && localStorage.getItem("text").length > 0)
+		{
+			var cartcount;
+			cartcount = parseInt(localStorage.getItem("basketcount")) + 1;
+			localStorage.setItem("basketcount", cartcount);
+			reset('addtocartfunc');
+			/*showitemadd();*/
+		}else{
+			if (document.getElementById('spinnerqty').value == 0) {
+				alert("Please enter a valid QTY above 0");
+			}else{
+				alert("Please review T-shirt text and try again");
+			}
+		}
+	}
+	
+    function settshirtcolor(tcol){ 
+		var tcoladjust = "#"+tcol; 
+		localStorage.setItem("tshirtcolour", tcoladjust);
+				$("#tshirt_container").load("tshirt.html",function(responseTxt,statusTxt,xhr){
+					if(statusTxt=="success")
+					if(statusTxt=="error")
+					  alert("An error occured ! a team of untrained monkies is investigating");
+				  });		
+	} 
+	
+	function setTextPosY(dirY)
+	{
+			var yval = localStorage.getItem("textposY");
+			if (dirY=="-"){
+			if(localStorage.getItem("textposY")>50){
+    
+	
+				yval = parseInt(yval)-10;
+				localStorage.setItem("textposY",yval);
+				$("#tshirt_container").load("tshirt.html",function(responseTxt,statusTxt,xhr){
+					if(statusTxt=="success")
+					if(statusTxt=="error")
+					  alert("An error occured ! a team of untrained monkies is investigating");
+				  });
+				}
+			}else{
+			if(localStorage.getItem("textposY")<245){
+				yval = parseInt(yval)+10;
+				localStorage.setItem("textposY",yval);
+				$("#tshirt_container").load("tshirt.html",function(responseTxt,statusTxt,xhr){
+					if(statusTxt=="success")
+					if(statusTxt=="error")
+					  alert("An error occured ! a team of untrained monkies is investigating");
+				  });				}
+			}
+	}
+	
+	function setTextPosX(dirX)
+	{
+			var xval = localStorage.getItem("textposX");
+			if (dirX=="-"){
+				if(localStorage.getItem("textposX")>52){
+					xval = parseInt(xval)-10;
+					localStorage.setItem("textposX",xval);
+				$("#tshirt_container").load("tshirt.html",function(responseTxt,statusTxt,xhr){
+					if(statusTxt=="success")
+					if(statusTxt=="error")
+					  alert("An error occured ! a team of untrained monkies is investigating");
+				  });				}
+			}else{
+				if(localStorage.getItem("textposX")<140){
+					xval = parseInt(xval)+10;
+					localStorage.setItem("textposX",xval);
+				$("#tshirt_container").load("tshirt.html",function(responseTxt,statusTxt,xhr){
+					if(statusTxt=="success")
+					if(statusTxt=="error")
+					  alert("An error occured ! a team of untrained monkies is investigating");
+				  });				}
+			}
+	}
+	
+	function addtext(atext){ 
+		localStorage.setItem("text", atext); 
+				$("#tshirt_container").load("tshirt.html",function(responseTxt,statusTxt,xhr){
+					if(statusTxt=="success")
+					if(statusTxt=="error")
+					  alert("An error occured ! a team of untrained monkies is investigating");
+				  });	} 
+	
+	function setfontcolor(fcol){ 
+	var fcoladjust = "#"+fcol; 
+		localStorage.setItem("fontcolour", fcoladjust); 
+				$("#tshirt_container").load("tshirt.html",function(responseTxt,statusTxt,xhr){
+					if(statusTxt=="success")
+					if(statusTxt=="error")
+					  alert("An error occured ! a team of untrained monkies is investigating");
+				  });	} 
+	
+	function setfontsize(fsiz){ 
+		fsiz= fsiz + "px Arial" 
+		localStorage.setItem("fontsize", fsiz); 
+				$("#tshirt_container").load("tshirt.html",function(responseTxt,statusTxt,xhr){
+					if(statusTxt=="success")
+					if(statusTxt=="error")
+					  alert("An error occured ! a team of untrained monkies is investigating");
+				  });	}
+	
+	function showitemadd(){
+        document.getElementById('basketanidiv').class ="basketani";
+    }
+	
+</script>
+<!-- *************************************** end scripts ***************************************** -->
+	
+	
+	</head>
+	
+
+<body>
+<div id="help">
+<b>Help <br> FAQs</b>
+-Help i cannot see font on my design
+	suggestion: ensure text colour is not the same colour as the text 
+</div>
+<div id ="wrapper">
+	<div id ="pgheader">
+		<div id="logo">
+				<img src="logo.png" alt="Big T Company logo" height="100" >
+		</div>
+		<div id="basket">
+				<div id="basketanidiv" class=""> items(<script> document.write(localStorage.getItem("basketcount"))</script>) </div> <img src="basket.png" alt="basket" height="50" >
+			<br>
+		</div>
+	</div>
+	<script type="text/javascript" src="header.js">  </script>
+	<div id="page_title">
+		<h3> Customiser </h3>
+	</div>	
+		<div id ="content">
+			
+			
+			<div id="leftcontentpane">
+				<div id="tshirt_container">
+				
+				<button  type="button" id="btnrefresh"  onclick="reset('resetbtn')">  </button>
+				
+					<canvas id="myCanvas" width="300" height="300" style="border:1px solid #d3d3d3;">
+											<script type="text/javascript" src="tshirt.js">  </script>
+
+						Your browser does not support the HTML5 canvas tag.</canvas>
+				</div>
+							<div class="simpleCart_shelfItem">
+				<input type="radio" name="tshirtsize" value="small">Small
+				<input type="radio" name="tshirtsize" value="medium">Medium
+				<input type="radio" name="tshirtsize" value="large">Large
+				<input type="radio" name="tshirtsize" value="X large">X Large
+				<input type="radio" name="tshirtsize" value="XX large">XX Large <br>
+				<input type="button" style="width:30%" onclick="addtocartfunc()"  class="item_add" value=" Add to cart" />
+			    Qty <input id="spinnerqty" type="number" style="width:10%" min="0" max="200" class="item_quantity" name="tshirt_qty" value="" > <br>
+				</div>
+
+			
+			</div>
+			<div id="rightcontentpane">
+<!-- ****************************************************************************** -->		
+				<br><table  bgcolor="#CCCCCC" align="center" width="90%" border="0" cellpadding="0" cellspacing="0">
+
+				  <tr>
+					<td colspan="2" align="left"><strong>Control Panel</strong></td>
+				 </tr>
+				  <tr>
+					<td colspan="2" valign="top" bgcolor="#CCCCCC"><hr /></td>
+				  </tr>
+
+				  <tr>
+					<td width="34%" align="left" valign="top" bgcolor="#CCCCCC"><span class="style3">&nbsp;&nbsp;T-Shirt Colour</span></td>
+					<td width="66%" align="right"  bgcolor="#CCCCCC">&nbsp;&nbsp;
+					  <input type="image" src="colpickbg.png"  class="colorpicker"  id="tcolour" alt="colour palette"/>
+					  <input class="applybtn" id="btnTshirtColApply" value="   " type="button"  onclick="settshirtcolor(document.getElementById('tcolour').value)"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				  </tr>
+				  <tr>
+					<td colspan="2" align="left" valign="top" bgcolor="#CCCCCC"><hr /></td>
+				  </tr>
+				  
+				  <tr>
+					<td align="left" valign="top" bgcolor="#CCCCCC"><span class="style3">
+					 &nbsp; Text
+					  
+					</span></td>
+					<td align="right" bgcolor="#CCCCCC"><span class="style3">
+					  <input type="text"  id="adtext" value="" size="16" maxlength="100" />
+					  <input type="button" name="btnAdText" id="btnAddText" value="   " class="applybtn" onclick="addtext(document.getElementById('adtext').value)" />&nbsp;&nbsp;&nbsp;&nbsp;
+					</span></td>
+				  </tr>
+
+				  <tr>
+					<td colspan="2" align="left" bgcolor="#CCCCCC"><hr />    </td>
+				  </tr>
+				  <tr>
+					<td align="left" valign="top" bgcolor="#CCCCCC"><span class="style3">&nbsp;&nbsp;Text Position</span></td>
+					<td align="left" bgcolor="#CCCCCC"><table width="50%" border="0" align="center">
+					  <tr>
+						<td align="left">&nbsp;</td>
+						<td align="left"><input name="btnuparrow" id="btnuparrow" value="  " type="button" onmousedown="setTextPosY('-')" /></td>
+						<td align="left">&nbsp;</td>
+					  </tr>
+					  <tr>
+						<td align="left"><input  name="btnleftarrow" id="btnleftarrow" value="  " type="button" onmousedown="setTextPosX('-')"/></td>
+						<td align="left">&nbsp;</td>
+						<td align="left"><input name="btnrightarrow" id="btnrightarrow" value="  " type="button" onmousedown="setTextPosX('+')"/></td>
+					  </tr>
+					  <tr>
+						<td align="left">&nbsp;</td>
+						<td align="left"><input name="btndownarrow" value="  " id="btndownarrow" type="button" onmousedown="setTextPosY('+')" /></td>
+						<td align="left">&nbsp;</td>
+					  </tr>
+					</table>
+					  <div align="center"></div></td>
+				  </tr>
+				  
+				  <tr>
+					<td colspan="2" align="center" valign="top" bgcolor="#CCCCCC"><div align="left">
+					  <hr />
+					</div></td>
+				  </tr>
+				   
+				  <tr>
+					<td  align="left" valign="top" bgcolor="#CCCCCC"><span class="style3">&nbsp;&nbsp;&nbsp;Font Size</span></td>
+					<td  align="right" bgcolor="#CCCCCC"><strong>-</strong>
+					  <input type="range" id="fsize" min="12" max="34" /> 
+					  <strong>+</strong>
+					<input type="button" id="btnFsizeColApply" value="   " class="applybtn" onclick="setfontsize(document.getElementById('fsize').value)"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				  </tr>
+				  
+				 
+				  <tr>
+					<td colspan="2"  align="left" valign="top" bgcolor="#CCCCCC"><hr /></td>
+				  </tr>
+				  <tr>
+					<td   align="left" valign="top" bgcolor="#CCCCCC"><span class="style3">&nbsp;&nbsp;&nbsp;Font Colour</span></td>
+					<td   align="right" bgcolor="#CCCCCC"><input type="image" src="colpickbg.png" alt="apply font colour" class="colorpicker" id="fcolour" />
+					<input id="btnTshirtColApply2" value="   " class="applybtn" type="submit" onclick="setfontcolor(document.getElementById('fcolour').value)" />&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				  </tr>
+				</table>
+
+				<!-- ****************************************************************************** -->
+
+
+			</div>
+		</div>
+	<script type="text/javascript" src="footer.js">  </script>
+</div>
+</body>
+</html>
